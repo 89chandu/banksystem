@@ -1,7 +1,12 @@
 [
     {
         "account_no": "6789",
-        "name": "hgghhg",
-        "balance": 19560875
+        "name": "Shreyansh",
+        "balance": 2000
+    },
+    {
+        "account_no": "1290",
+        "name": "Mayuri",
+        "balance": 1000
     }
 ]

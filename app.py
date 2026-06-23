@@ -1,8 +1,38 @@
 import pandas as pd
 import streamlit as st
+from auth import Auth
 
 from account import SavingAccount
 from bank import Bank
+
+
+if "logged_in" not in st.session_state:
+    st.session_state.logged_in = False
+
+if not st.session_state.logged_in:
+
+    st.title("Banking System Login")  
+
+    username = st.text_input("Enter username")
+
+    password = st.text_input("Enter Password ")  
+
+    if st.button("Login"):
+        if Auth.login(username,password):
+            st.session_state.logged_in = True
+            st.success("Login Suessfull")
+
+            st.rerun()
+
+        else:
+            st.error("Invalid username or password")   
+
+    st.stop()         
+
+
+
+
+
 
 
 st.set_page_config(
@@ -539,6 +569,7 @@ with st.sidebar:
             "View Accounts",
             "Deposit",
             "Withdraw",
+            "Transaction History",
         ],
     )
 
@@ -627,6 +658,43 @@ elif menu == "Deposit":
                 st.error("Deposit failed. Please check the account and amount.")
 
     st.markdown("</div>", unsafe_allow_html=True)
+
+elif menu == "Transaction History":
+
+    st.header("Transaction History") 
+
+    account_no = st.text_input("Enter Account Number :")
+
+    if st.button("View History"):
+        account = bank.find_account(account_no) 
+
+        if account:
+            data = []
+
+            for transaction in account.transactions:
+                if isinstance(transaction,dict):
+
+                    data.append({
+                        "Type":transaction["type"],
+                        "Amount":transaction["amount"],
+                        "Date":transaction["date"]
+                    })
+                else:
+                    data.append({
+                        "Type":transaction.transaction_type,
+                        "Amount":transaction.amount,
+                        "Date":transaction.date
+                    })  
+
+            if data:
+                st.dataframe(data)
+
+            else:
+                st.warning("No transaction Found") 
+        else:
+            st.error("Account not found")        
+
+
 
 elif menu == "Withdraw":
     st.markdown('<div class="panel">', unsafe_allow_html=True)

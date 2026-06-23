@@ -1,8 +1,11 @@
+from transaction import Transaction
+
 class Account:
     def __init__(self,account_no,name,balance=0):
         self.account_no = account_no
         self.name = name
         self.__balance = balance
+        self.transactions = []
 
     def _ensure_balance(self):
         if not hasattr(self, "_Account__balance"):
@@ -13,6 +16,13 @@ class Account:
 
         if amount > 0:
             self.__balance += amount
+
+            transaction = Transaction(
+                "Deposit",
+                amount
+            )
+
+            self.transactions.append(transaction)
             return True
         
         return False
@@ -22,6 +32,15 @@ class Account:
 
         if 0 < amount <= self.__balance :
             self.__balance -= amount
+
+            transaction = Transaction(
+                "Withdraw",
+                amount
+            )
+
+            self.transactions.append(transaction)
+
+
             return True
 
         return False    
@@ -35,7 +54,11 @@ class Account:
         return {
             "account_no":self.account_no,
             "name":self.name,
-            "balance":self.get_balance()
+            "balance":self.get_balance(),
+            "transactions": [
+                t.to_dict()
+                for t in self.transactions
+            ]
         }
     
 

@@ -1,5 +1,6 @@
 import json
 import os
+from transaction import Transaction
 
 from account import SavingAccount
 
@@ -24,6 +25,12 @@ class Bank:
                         item["name"],
                         item["balance"]
                     )
+
+                    if "transactions" in item:
+                        for t in item["transactions"]:
+                            transaction = Transaction(t["type"], t["amount"])
+                            transaction.date = t["date"]
+                            account.transactions.append(transaction)
 
                     self.accounts.append(account)
 

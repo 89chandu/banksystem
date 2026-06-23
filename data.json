@@ -2,11 +2,36 @@
     {
         "account_no": "6789",
         "name": "Shreyansh",
-        "balance": 2000
+        "balance": 1000,
+        "transactions": [
+            {
+                "type": "Withdraw",
+                "amount": 1000,
+                "date": "23-06-2026 19:50:00"
+            }
+        ]
     },
     {
         "account_no": "1290",
         "name": "Mayuri",
-        "balance": 1000
+        "balance": 1000,
+        "transactions": []
+    },
+    {
+        "account_no": "12222",
+        "name": "Virat Kohli",
+        "balance": 11050005,
+        "transactions": [
+            {
+                "type": "Deposit",
+                "amount": 10000,
+                "date": "23-06-2026 19:31:26"
+            },
+            {
+                "type": "Withdraw",
+                "amount": 10000,
+                "date": "23-06-2026 19:50:20"
+            }
+        ]
     }
 ]
